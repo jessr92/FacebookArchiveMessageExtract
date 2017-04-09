@@ -11,7 +11,7 @@ class Extractor:
         self.ah_id = "625786616@facebook.com"
         self.ah_name = "Gordon Reid"
 
-        self.directory = "C:/Users/gordo/Downloads/facebook-gordon1992/html/"
+        self.directory = "C:/Users/gordo/Dropbox/Documents/facebook-gordon1992/html/"
 
         self.i_file = self.directory + "messages.htm"
         self.o_file = self.directory + self.p_name + " and " + self.ah_name + ".htm"
@@ -27,6 +27,5 @@ class Extractor:
     def extract_and_output_file(self):
         message_history = self.__extract_message_history()
         output_html(self.o_file, message_history)
-
 
 Extractor().extract_and_output_file()
