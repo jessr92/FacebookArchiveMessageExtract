@@ -1,4 +1,4 @@
-from yattag import Doc, indent
+from yattag import Doc
 
 
 class FacebookConversationHistory:
@@ -40,4 +40,4 @@ class FacebookConversationHistory:
                     self.__generate_table_header()
                     for message in self.message_history:
                         self.__generate_message(message)
-        return indent(self.doc.getvalue())
+        return self.doc.getvalue()
