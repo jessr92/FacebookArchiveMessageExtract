@@ -1,17 +1,19 @@
+import argparse
+
 from facebookconversationhistory import FacebookConversationHistory
 from facebookconversationprocessor import FacebookConversationProcessor
 from filehelpers import read_message_archive, output_html
 
 
 class Extractor:
-    def __init__(self):
-        self.p_id = "509508305@facebook.com"
-        self.p_name = "Shantel Arendt"
+    def __init__(self, arguments):
+        self.p_id = arguments.p_id
+        self.p_name = arguments.p_name
 
-        self.ah_id = "625786616@facebook.com"
-        self.ah_name = "Gordon Reid"
+        self.ah_id = arguments.ah_id
+        self.ah_name = arguments.ah_name
 
-        self.directory = "C:/Users/gordo/Dropbox/Documents/facebook-gordon1992/html/"
+        self.directory = arguments.directory
 
         self.i_file = self.directory + "messages.htm"
         self.o_file = self.directory + self.p_name + " and " + self.ah_name + ".htm"
@@ -28,4 +30,16 @@ class Extractor:
         message_history = self.__extract_message_history()
         output_html(self.o_file, message_history)
 
-Extractor().extract_and_output_file()
+arg_parser = argparse.ArgumentParser(description='Process Facebook message archive.')
+arg_parser.add_argument("--p_id",
+                        help='Facebook ID with @facebook.com of conversation participant')
+arg_parser.add_argument("--p_name",
+                        help='Name of conversation participant')
+arg_parser.add_argument("--ah_id",
+                        help='Facebook ID with @facebook.com of account holder')
+arg_parser.add_argument("--ah_name",
+                        help='Name of account holder')
+arg_parser.add_argument("--directory",
+                        help='Directory containing messages.htm archive file')
+
+Extractor(arg_parser.parse_args()).extract_and_output_file()

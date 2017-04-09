@@ -8,8 +8,7 @@ class FacebookConversationProcessor:
     @staticmethod
     def __get_threads(data):
         threads = SoupStrainer("div", {"class": "thread"})
-        parsed = BeautifulSoup(data, "lxml", parse_only=threads)
-        return parsed
+        return BeautifulSoup(data, "lxml", parse_only=threads)
 
     @staticmethod
     def __get_message_info(data):
