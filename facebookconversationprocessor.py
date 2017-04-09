@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, SoupStrainer
 
 
 class FacebookConversationProcessor:
@@ -7,23 +7,25 @@ class FacebookConversationProcessor:
 
     @staticmethod
     def __get_threads(data):
-        return BeautifulSoup(data, "html.parser").findAll("div", {"class": "thread"})
+        threads = SoupStrainer("div", {"class": "thread"})
+        parsed = BeautifulSoup(data, "lxml", parse_only=threads)
+        return parsed
 
     @staticmethod
     def __get_message_info(data):
-        return data.findAll("div", {"class": "message"})[::-1]
+        return data.findAll("div", {"class", "message_header"})[::-1]
 
     @staticmethod
     def __get_message_text(data):
-        return data.findAll("p")[::-1]
+        return data.findAll("p", recursive=False)[::-1]
 
     @staticmethod
     def __get_message_date_and_time(message_info):
-        return message_info.find("span", {"class": "meta"}).text
+        return message_info.find("span", {"class": "meta"}, recursive=False).text
 
     @staticmethod
     def __get_message_sender(message_info, p_id, p_name, ah_id, ah_name):
-        return message_info.find("span", {"class": "user"}).text \
+        return message_info.find("span", {"class": "user"}, recursive=False).text \
             .replace(p_id, p_name) \
             .replace(ah_id, ah_name)
 
