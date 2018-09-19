@@ -30,6 +30,7 @@ class Extractor:
         message_history = self.__extract_message_history()
         output_html(self.o_file, message_history)
 
+
 arg_parser = argparse.ArgumentParser(description='Process Facebook message archive.')
 arg_parser.add_argument("--p_id",
                         help='Facebook ID with @facebook.com of conversation participant')
